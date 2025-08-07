@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# 临时锁屏背景图
+WALLPAPER="$HOME/Pictures/wallpapers/g1.jpg"  # 你的锁屏底图
+
+# 截屏模糊
+TMPBG="/tmp/lockscreen.png"
+BLUR="0x8"
+
+# 字体
+FONT="Raleway"
+
+# 获取加速版天气（用你的 weather.sh，保存在 ~/.config/i3/weather.sh）
+WEATHER=$("$HOME/.config/my_scripts/weather.sh")
+DATE=$(date '+%A, %d %B %Y')
+TIME=$(date '+%H:%M')
+
+# 制作背景图：模糊+文字
+magick "$WALLPAPER" -resize 2560x1440^ -gravity center -extent 2560x1440 -blur $BLUR "$TMPBG"
+
+# 添加文字（时间、日期、天气）
+magick "$TMPBG" \
+  -gravity center \
+  -font "$FONT" -pointsize 50 -fill white -annotate +0-400 "$TIME" \
+  -font "$FONT" -pointsize 30 -fill white -annotate +0-320 "$DATE" \
+  -font "$FONT" -pointsize 30 -fill white -annotate +0-250 "$WEATHER" \
+  "$TMPBG"
+
+# 锁屏
+i3lock \
+  -i "$TMPBG" \
+  --inside-color=00000088 --ring-color=ffffffcc \
+  --line-color=00000000 --separator-color=00000000 \
+  --insidever-color=ffffff88 --ringver-color=ffffff \
+  --insidewrong-color=ff000088 --ringwrong-color=ff0000 \
+  --verif-text="" --wrong-text="" --noinput-text="" --radius 150 \
+  --time-font="$FONT" --date-font="$FONT" \
+  --time-size=36 --date-size=20 \
+  --time-str="$TIME" \
+  --date-str="$DATE"
+

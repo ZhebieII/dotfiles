@@ -1,0 +1,161 @@
+{
+  "layer": "top",
+  "position": "top",
+  "spacing": 6,
+  "margin-top": 0,
+  "margin-left": 0,
+  "margin-right": 0,
+  "margin-bottom": 0,
+  "height": 10,
+  "modules-left": ["custom/launcher", "hyprland/workspaces", "clock", "custom/weather"],
+  "modules-center": ["hyprland/window"],
+  "modules-right": [
+    "cpu", 
+    "memory",
+    "disk",
+    "pulseaudio",
+    "backlight",
+    "network",
+    "custom/fcitx",
+    "custom/swaync"
+  ],
+  "hyprland/workspaces": {
+    "format": "{name}",
+    "persistent-workspaces": {
+      "*": 10
+    },
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1"
+  },
+  "hyprland/window": {
+    "format": "  \uf061 {}",
+    "separate-outputs": true
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10
+  },
+  "clock": {
+    "interval": 1,
+    "format": "\uf017 {:%H:%M}",
+    "format-alt": "\uf133 {:%Y-%m-%d %H:%M}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+  "cpu": {
+    "interval": 1,
+    "format": " {usage:2}%",
+    // "format": "\uf2db {usage:2}%",
+    "tooltip": true
+  },
+  "memory": {
+    "interval": 1,
+    "format": "\uf538 {used:0.1f}G",
+    "tooltip": true,
+    "tooltip-format": " RAM: {used:0.2f}G / {total:0.2f}G\nSwap: {swapUsed:0.2f}G / {swapTotal:0.2f}G"
+  },
+  "disk": {
+    "interval": 30,
+    "format": " {free}",
+    "path": "/",
+    "tooltip-format": "{used} / {total}"
+  },
+
+  "network": {
+    "interval": 1,
+    "format-wifi": "\uf1eb {essid} ({signalStrength}%)",
+    "format-ethernet": "\uf6ff {ifname}",
+    "format-linked": "\uf059 No IP ({ifname})",
+    "format-disconnected": "\uf071 Disconnected",
+    "tooltip-format": "{ifname} {ipaddr}/{cidr} via {gwaddr}",
+    "format-alt": "\uf6ff {ipaddr}/{cidr}"
+  },
+  "pulseaudio": {
+    "scroll-step": 5,
+    "format": "{icon} {volume:2}%",
+    "format-muted": "\uf6a9",
+    "format-bluetooth": "{icon}\uf294 {volume}%",
+    "format-bluetooth-muted": "\ufa69 {icon}\uf294",
+    "format-icons": {
+      "default": ["\uf026", "\uf027", "\uf028"]
+    },
+    // "on-click-right": "pavucontrol",
+    "ignored-sinks": ["AudioRelay Virtual Sink", "Recorder Sink"]
+  },
+  "backlight": {
+    "tooltip": false,
+    "format": " {}%",
+    "interval": 1,
+    "on-scroll-up": "brightnessctl set 5%+",
+    "on-scroll-down": "brightnessctl set 5%-"
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 40,
+      "critical": 20
+    },
+    "format": "{icon}  {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-alt": "{time} {icon}",
+    "format-icons": ["", "", "", "", ""]
+  },
+
+
+// ---
+// custom modules
+// ---
+    "custom/launcher":{
+        "format": " ",
+        "on-click": "rofi -show drun",
+        "on-click-right": "~/.config/rofi/bin/rofi-powermenu"
+    },
+
+
+    "custom/weather": {
+        "format": "{}",
+        "interval": 10,
+        "exec": "~/.config/waybar/weather.sh",
+        "tooltip": false
+    },
+
+    "custom/fcitx": {
+        "exec": "fcitx5-remote",
+        "format": " EN",
+        "tooltip": false
+    },
+
+//    "custom/swaync": {
+//       "exec": "swaync-client -t",
+//       "on-click": "swaync-client -t",
+//       "tooltip": false
+//    }
+    "custom/swaync": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "swaync-client -t",
+        "on-click-right": "swaync-client -d",
+        "exec": "swaync-client -swb"
+    }    
+}
