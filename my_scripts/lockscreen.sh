@@ -1,14 +1,19 @@
-i3lock -i  "$(cat ~/.fehbg | tail -1 | cut -d "'" -f2)"\
+i3lock -i  "$(cat ~/.fehbg | tail -1 | cut -d "'" -f2)" -F \
+    --bar-indicator \
+    --bar-base-width=2 \
+    --bar-pos="h-2"\
     --clock \
-    --time-color=ffffff \
-    --date-color=ffffff \
-    --time-size=48 \
-    --date-size=30 \
-    --time-font="Maple Nerd Font"\
+    --time-color=fb8500\
+    --date-color=e07a5f\
+    --time-size=80 \
+    --date-size=36 \
+    --time-font="Raleway:bold"\
     --date-font="Raleway"\
-    --indicator \
-    --ring-width=10\
-    --radius=160 \ 
-    --ring-color=b58900 \
-    --inside-color=00000066 \
-    --keyhl-color=ff5555
+    --time-pos="w/2:ty+320"\
+    --date-pos="tx:ty+80"\
+    --blur=8 \
+    --greeter-font="Maple Mono NF CN"\
+    --greeter-text="$(fortune)"\
+    --greeter-size=24\
+    --greeter-pos="w/2:h-80"\
+    --greeter-color="219ebc"
